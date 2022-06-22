@@ -23,15 +23,15 @@ def products_list(request):
         serializer = ProductsSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(serializer._data, status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 
 @api_view(['GET', 'PUT','DELETE'])
 def products_detail(request, pk):
-    car = get_object_or_404(Products, pk=pk)
+    product = get_object_or_404(Products, pk=pk)
     if request.method == 'GET':
-        serializer = ProductsSerializer(products);
+        serializer = ProductsSerializer(product);
         return Response(serializer.data)
     elif request.method == 'PUT':
         serializer = ProductsSerializer(product, data=request.data)
